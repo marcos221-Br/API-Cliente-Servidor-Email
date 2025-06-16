@@ -40,6 +40,7 @@ public class EmailService {
     private Email email;
 
     public RascunhoDto createRascunho(RascunhoDto rascunhoDto, Usuario remetente){
+        rascunhoDto.setRascunhoId(null);
         this.email = rascunhoMapper.rascunhoDtoToEmail(rascunhoDto);
         this.email.setRemetente(remetente);
         this.email.setStatus(Status.rascunho);
@@ -50,7 +51,7 @@ public class EmailService {
             if(this.email.getDestinatario() != null){
                 this.email.setDestinatario(this.usuarioRepository.findByEmail(this.email.getDestinatario().getEmail()).get());
             }
-            return rascunhoMapper.emailToRascunhoDto(this.emailRepository.save(email));
+            return rascunhoMapper.emailToRascunhoDto(this.emailRepository.save(this.email));
         }catch(NoSuchElementException e){
             throw new NotFoundException("Email não encontrado");
         }catch(Exception e){
