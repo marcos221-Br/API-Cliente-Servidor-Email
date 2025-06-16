@@ -12,6 +12,6 @@ public interface EmailRepository extends JpaRepository<Email,Integer>{
     @Query(value = "SELECT * FROM emails WHERE remetente = ? AND status = 0", nativeQuery = true)
     List<Email> getAllRascunhosUsuario(Integer remetente);
 
-    @Query(value = "SELECT * FROM emails WHERE (remetente = ? OR destinatario = ?) AND status > 0", nativeQuery = true)
-    List<Email> getAllEmailsUsuario(Integer remetente, Integer destinatario);
+    @Query(value = "SELECT * FROM emails WHERE destinatario = ? AND status > 0", nativeQuery = true)
+    List<Email> getAllEmailsUsuario(Integer destinatario);
 }

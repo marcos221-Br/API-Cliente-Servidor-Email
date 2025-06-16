@@ -64,7 +64,6 @@ public class EmailService {
         this.email.setRemetente(remetente);
         this.email.setStatus(Status.rascunho);
         try{
-            System.out.println(this.email);
             if(this.email.getDestinatario() != null){
                 this.email.setDestinatario(this.usuarioRepository.findByEmail(this.email.getDestinatario().getEmail()).get());
             }
@@ -187,7 +186,7 @@ public class EmailService {
 
     public List<EmailDto> getAllEmailsUsuario(Usuario usuario){
         try{
-            List<Email> emails = this.emailRepository.getAllEmailsUsuario(usuario.getId(), usuario.getId());
+            List<Email> emails = this.emailRepository.getAllEmailsUsuario(usuario.getId());
             System.out.println(emails);
             if(emails.size() < 1){
                 throw new NotFoundException("Rascunho não encontrado");
