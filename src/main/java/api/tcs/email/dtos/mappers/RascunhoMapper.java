@@ -13,7 +13,7 @@ import api.tcs.email.models.Usuario;
 @Mapper(componentModel = "spring")
 public interface RascunhoMapper {
     
-    @Mapping(source="rascunhoId", target="id")
+    @Mapping(target="id", ignore=true)
     @Mapping(target="envio", ignore=true)
     @Mapping(target="remetente", ignore=true)
     @Mapping(target="status", ignore=true)

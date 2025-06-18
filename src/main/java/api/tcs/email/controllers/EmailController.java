@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +34,7 @@ public class EmailController {
         return ResponseEntity.ok().body(new EmailResponseDto("Email enviado com sucesso", this.emailService.sendRascunho(id, ((Usuario)authentication.getPrincipal()))));
     }
 
-    @PutMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getEmail(@PathVariable Integer id, Authentication authentication){
         return ResponseEntity.ok().body(new EmailResponseDto("Email marcado como lido", this.emailService.getEmail(id, ((Usuario)authentication.getPrincipal()))));
     }

@@ -18,7 +18,6 @@ import api.tcs.email.dtos.models.RascunhoDto;
 import api.tcs.email.models.JsonMessage;
 import api.tcs.email.models.Usuario;
 import api.tcs.email.services.EmailService;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/rascunhos")
@@ -32,9 +31,9 @@ public class RascunhoController {
         return ResponseEntity.ok().body(new RascunhoResponseDto("Rascunho criado",this.emailService.createRascunho(rascunhoDto, ((Usuario)authentication.getPrincipal()))));
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateRascunho(@RequestBody @Valid RascunhoDto rascunhoDto, Authentication authentication){
-        return ResponseEntity.ok().body(new RascunhoResponseDto("Rascunho salvo com sucesso",this.emailService.updateRascunho(rascunhoDto, ((Usuario)authentication.getPrincipal()))));
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateRascunho(@RequestBody RascunhoDto rascunhoDto, Authentication authentication, @PathVariable Integer id){
+        return ResponseEntity.ok().body(new RascunhoResponseDto("Rascunho salvo com sucesso",this.emailService.updateRascunho(rascunhoDto, id, ((Usuario)authentication.getPrincipal()))));
     }
 
     @GetMapping

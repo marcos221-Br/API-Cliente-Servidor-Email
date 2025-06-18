@@ -59,10 +59,11 @@ public class EmailService {
         }
     }
 
-    public RascunhoDto updateRascunho(RascunhoDto rascunhoDto, Usuario remetente){
+    public RascunhoDto updateRascunho(RascunhoDto rascunhoDto, Integer id, Usuario remetente){
         this.email = rascunhoMapper.rascunhoDtoToEmail(rascunhoDto);
         this.email.setRemetente(remetente);
         this.email.setStatus(Status.rascunho);
+        this.email.setId(id);
         try{
             if(this.email.getDestinatario() != null){
                 this.email.setDestinatario(this.usuarioRepository.findByEmail(this.email.getDestinatario().getEmail()).get());
