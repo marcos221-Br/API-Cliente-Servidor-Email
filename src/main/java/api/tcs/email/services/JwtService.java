@@ -1,8 +1,6 @@
 package api.tcs.email.services;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -30,11 +28,7 @@ public class JwtService {
         this.redisTemplate = redisTemplate;
     }
 
-    public void blackListToken(String token){
-        redisTemplate.opsForValue().set(token, "blacklisted", expirationTime, TimeUnit.MILLISECONDS);
-    }
-
-    public boolean isTokenBlacklisted(String token){
+    public boolean isTokenWhitelisted(String token){
         return redisTemplate.hasKey(token);
     }
 
@@ -56,21 +50,9 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
-    private boolean isTokenExpired(String token) {
-        try {
-            return extractExpiration(token).before(new Date());
-        } catch (NullPointerException e) {
-            return true;
-        }
-    }
-
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token) && !isTokenBlacklisted(token);
+        return username.equals(userDetails.getUsername()) && isTokenWhitelisted(token);
     }
 
     public long getExpirationTime(){
