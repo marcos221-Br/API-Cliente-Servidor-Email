@@ -83,11 +83,7 @@ public class EmailService {
 
     public List<RascunhoDto> getAllRascunhosUsuario(Usuario remetente){
         try{
-            List<Email> emails = this.emailRepository.getAllRascunhosUsuario(remetente.getId());
-            if(emails.size() < 1){
-                throw new NotFoundException("Rascunho não encontrado");
-            }
-            return this.rascunhoMapper.emailsToRascunhoDtos(emails);
+            return this.rascunhoMapper.emailsToRascunhoDtos(this.emailRepository.getAllRascunhosUsuario(remetente.getId()));
         }catch(NotFoundException e){
             throw new NotFoundException(e.getMessage());
         }catch(Exception e){
@@ -187,12 +183,7 @@ public class EmailService {
 
     public List<EmailDto> getAllEmailsUsuario(Usuario usuario){
         try{
-            List<Email> emails = this.emailRepository.getAllEmailsUsuario(usuario.getId());
-            System.out.println(emails);
-            if(emails.size() < 1){
-                throw new NotFoundException("Rascunho não encontrado");
-            }
-            return this.emailMapper.emailsToEmailDtos(emails);
+            return this.emailMapper.emailsToEmailDtos(this.emailRepository.getAllEmailsUsuario(usuario.getId()));
         }catch(NotFoundException e){
             throw new NotFoundException(e.getMessage());
         }catch(Exception e){
